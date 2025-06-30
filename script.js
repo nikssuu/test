@@ -1,6 +1,8 @@
+
 // Функція для отримання назви поточної сторінки
 function getCurrentPageName() {
     const path = window.location.pathname;
+    // Повертаємо назву файлу, або порожній рядок, якщо це кореневий URL (наприклад, /test/)
     return path.substring(path.lastIndexOf('/') + 1);
 }
 
@@ -79,10 +81,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Логіка навігації сторінками ---
 
-    if (currentPage === 'index.html') {
+    // Обробка кнопки "Розпочати" на index.html
+    if (currentPage === 'index.html' || currentPage === '') { // Додано || currentPage === '' для коректної роботи на GitHub Pages (коли URL закінчується на /test/)
         const startButton = document.getElementById('startButton');
         if (startButton) {
-            startButton.addEventListener('click', () => {
+            startButton.addEventListener('click', (event) => { // Додано 'event'
+                event.preventDefault(); // Запобігаємо стандартній поведінці кнопки (наприклад, якщо вона всередині форми)
                 const userName = document.getElementById('userName').value;
                 if (userName) {
                     localStorage.setItem('userName', userName);
@@ -127,8 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = 'page4.html';
             } else if (currentPage === 'page4.html') {
                 // Час завершення тестування встановлюється при натисканні "ПЕРЕВІРИТИ" (останній раз)
-                // Якщо користувач переходить кнопкою "Наступний крок", а не "Перевірити", то рахунок може бути не збережений
-                // На цей момент, перехід сюди дозволений лише після використання всіх спроб
                 window.location.href = 'page5.html';
             } else if (currentPage === 'page5.html') {
                 localStorage.removeItem('userName');
@@ -283,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 let dropdownList = document.createElement('ul');
                 dropdownList.classList.add('dropdown-list');
-                dropdownList.style.display = 'none';
+                dropdownList.style.display = 'none'; // Спочатку приховано
                 dropdownList.style.position = 'absolute';
                 dropdownList.style.backgroundColor = '#fff';
                 dropdownList.style.border = '1px solid #ccc';
@@ -305,9 +307,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     listItem.addEventListener('mouseover', () => listItem.style.backgroundColor = '#f0f0f0');
                     listItem.addEventListener('mouseout', () => listItem.style.backgroundColor = '');
                     listItem.addEventListener('click', (e) => {
-                        e.stopPropagation();
+                        e.stopPropagation(); // Запобігти закриттю кнопки одразу
                         button.textContent = option;
-                        button.dataset.value = option;
+                        button.dataset.value = option; // Зберігаємо вибране значення в data-атрибуті
                         button.classList.remove('active');
                         dropdownList.style.display = 'none';
                         clearFeedback(button); // Очищаємо зворотний зв'язок при зміні відповіді
@@ -380,7 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const userArray = userAnsString.split(', ').filter(Boolean).sort();
                     const correctArray = correctAnsString.split(', ').filter(Boolean).sort();
                     return userArray.length === correctArray.length &&
-                        userArray.every((val, index) => val === correctArray[index]);
+                           userArray.every((val, index) => val === correctArray[index]);
                 };
 
                 // Функція для застосування візуального зворотного зв'язку
