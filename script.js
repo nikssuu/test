@@ -37,7 +37,7 @@ const KINEMATIC_PAIRS_DATA = [
     {
         imageName: "4.jpg", // Циліндричне з'єднання (image_bd9079.png, рядок 2)
         q1_translation: "Ox, Oy",
-        q2_rotation: "Ox, 0y",
+        q2_rotation: "Ox, Oy",
         q3_impossible_moves: "5",
         q4_class: "V",
         q5_type: "Нижча"
