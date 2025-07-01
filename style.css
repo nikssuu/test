@@ -603,9 +603,9 @@ button:hover {
     }
     /* .dropdown-button specific width is now inherited or takes original values */
     .dropdown-button {
-         min-width: 200px; /* Зберігаємо min-width */
-         max-width: 300px; /* Зберігаємо max-width */
-         width: auto; /* Нехай визначається вмістом */
+        min-width: 200px; /* Зберігаємо min-width */
+        max-width: 300px; /* Зберігаємо max-width */
+        width: auto; /* Нехай визначається вмістом */
     }
 
     .axis-buttons {
