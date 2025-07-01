@@ -304,6 +304,9 @@ button:hover {
     cursor: default;
     min-height: 40px;
     overflow: auto;
+
+    /* ВИПРАВЛЕНО: Видалено color: transparent; та text-shadow: 0 0 0 #aaa; */
+    /* Ці властивості робили текст всередині поля невидимим. */
 }
 
 /* Стилі для плейсхолдера, щоб він відображався коректно */
@@ -385,6 +388,44 @@ button:hover {
     background-color: #ffe6e6 !important; /* Світло-червоний фон */
 }
 
+/* Styles for feedback icons */
+.feedback-icon {
+    margin-left: 8px;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0; /* Щоб іконка не зменшувалась */
+}
+
+.feedback-icon.correct {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2328a745"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>');
+}
+
+.feedback-icon.incorrect {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23dc3545"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>');
+}
+
+/* Flex container for input/button and feedback icon */
+.input-with-feedback {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Пространство между полем/кнопкой и иконкой */
+    flex-grow: 1; /* Позволяет контейнеру занимать доступное пространство */
+    min-width: 250px; /* Для input-and-choices */
+    /* Для dropdown-buttons-group */
+    max-width: 300px;
+    position: relative; /* Важливо для позиціонування випадаючого списку */
+}
+
+.input-with-feedback .question-input,
+.input-with-feedback .dropdown-button {
+    flex-grow: 1; /* Поле/кнопка будет заполнять доступное пространство в своем flex-контейнере */
+}
+
 
 /* Стили для выпадающих списков (кнопок) */
 .dropdown-buttons-group {
@@ -429,6 +470,13 @@ button:hover {
 .dropdown-button.active .arrow-down {
     transform: rotate(180deg);
 }
+
+.dropdown-list {
+    position: absolute;
+    left: 0;
+    box-sizing: border-box;
+}
+
 
 /* Кнопка "ПЕРЕВІРИТИ" */
 .check-button {
@@ -541,11 +589,14 @@ button:hover {
 
     /* Page 4 specific adjustments */
     .image-section {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row; /* Змінено на row, щоб зображення залишались поруч */
+        justify-content: center; /* Центруємо зображення */
+        flex-wrap: wrap; /* Дозволяємо переносити на новий рядок, якщо не вистачає місця */
+        gap: 15px; /* Можна зменшити gap для щільнішого розташування на мобільних */
     }
     .image-box {
-        width: 90%;
+        width: calc(50% - 10px); /* Змінено на 50% мінус половина gap, щоб вмістити два зображення в ряд */
+        max-width: unset; /* Знімаємо обмеження, щоб width: 50% працював */
     }
     .input-and-choices-group, .dropdown-buttons-group {
         flex-direction: column;
