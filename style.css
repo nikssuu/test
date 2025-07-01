@@ -562,72 +562,78 @@ button:hover {
 /* --- Адаптивність (MEDIA QUERIES) --- */
 @media (max-width: 768px) {
     body {
+        overflow-x: auto; /* Дозволяємо горизонтальне прогортання */
+        align-items: flex-start; /* Вирівнюємо вміст зліва для горизонтального прогортання */
         padding-bottom: 70px;
     }
+    /* Для всіх контейнерів на мобільних пристроях, які мають прокручуватись горизонтально */
     .container, .page2-container, .page3-container, .page4-container {
         padding: 20px;
-        margin: 20px auto;
+        margin: 20px 0; /* Змінено margin-left/right на 0, щоб не було порожніх відступів */
+        max-width: none; /* Знімаємо обмеження max-width */
+        width: 900px; /* Задаємо фіксовану ширину для контейнера */
+        box-sizing: border-box; /* Важливо для збереження padding при фіксованій ширині */
     }
 
-    /* Page 2 specific adjustments */
-    .page2-container .nav-button {
-        min-width: 120px;
-    }
-
-    /* Page 3 specific adjustments */
-    .page3-container .navigation-buttons { /* Цей блок не має бути, якщо використовується .bottom-nav-bar */
-        flex-direction: column;
-        align-items: center;
-    }
-    .page3-container .nav-button { /* Цей блок не має бути, якщо використовується .bottom-nav-bar */
-        width: 90%;
-        max-width: 300px;
-    }
-    .page-title, .section-heading, .section-subheading, .theory-content p {
-        text-align: center;
-    }
-
-    /* Page 4 specific adjustments */
+    /* Page 4 specific adjustments for horizontal scrolling */
     .image-section {
-        flex-direction: row; /* Змінено на row, щоб зображення залишались поруч */
-        justify-content: center; /* Центруємо зображення */
-        flex-wrap: wrap; /* Дозволяємо переносити на новий рядок, якщо не вистачає місця */
-        gap: 15px; /* Можна зменшити gap для щільнішого розташування на мобільних */
+        flex-direction: row; /* Залишаємо поруч */
+        justify-content: flex-start; /* Вирівнюємо зліва */
+        flex-wrap: nowrap; /* Забороняємо перенос на новий рядок */
+        gap: 20px; /* Зберігаємо відступи */
     }
     .image-box {
-        width: calc(50% - 10px); /* Змінено на 50% мінус половина gap, щоб вмістити два зображення в ряд */
-        max-width: unset; /* Знімаємо обмеження, щоб width: 50% працював */
+        width: 45%; /* Використовуємо ширину з ПК-версії */
+        max-width: 400px; /* Зберігаємо max-width */
     }
+
+    /* Questions sections: Force row layout without wrapping or shrinking */
     .input-and-choices-group, .dropdown-buttons-group {
-        flex-direction: column;
-        gap: 15px;
+        flex-direction: row; /* Залишаємо поруч */
+        flex-wrap: nowrap;     /* Забороняємо перенос на новий рядок */
+        justify-content: flex-start; /* Вирівнюємо зліва */
+        gap: 20px;           /* Зберігаємо відступи */
     }
-    .input-and-choices, .dropdown-button {
-        min-width: unset;
-        width: 100%;
+
+    .input-and-choices,
+    .input-with-feedback { /* Елементи всередині груп питань також отримують ширину з ПК-версії */
+        min-width: 250px; /* Зберігаємо min-width */
+        width: auto; /* Нехай визначається вмістом, або за потреби можна задати фіксовану */
+        max-width: 300px; /* Зберігаємо max-width */
     }
+    /* .dropdown-button specific width is now inherited or takes original values */
+    .dropdown-button {
+         min-width: 200px; /* Зберігаємо min-width */
+         max-width: 300px; /* Зберігаємо max-width */
+         width: auto; /* Нехай визначається вмістом */
+    }
+
     .axis-buttons {
-        justify-content: center;
+        justify-content: flex-start; /* Вирівнюємо зліва */
     }
     /* Для input-поля, коли воно є контейнером для кнопок */
     .question-input {
-        min-width: unset;
-        width: 100%;
+        min-width: 120px; /* Зберігаємо min-width */
+        width: auto; /* Нехай визначається вмістом */
     }
     /* Кнопка "ПЕРЕВІРИТИ" */
     .check-button {
-        align-self: center; /* Центрируем кнопку "ПРОВЕРИТЬ" на мобильных */
-        width: 100%; /* ЦЕЙ РЯДОК РОЗТЯГУЄ КНОПКУ НА 100% НА МОБІЛЬНИХ, ЯКЩО НЕМАЄ max-width */
+        align-self: center; /* Центруємо кнопку "ПРОВЕРИТЬ" на мобільних */
+        width: 100%; /* Залишаємо адаптивною відносно контейнера */
         max-width: 300px; /* Додаємо max-width для контролю */
     }
 
+    /* Нижня навігаційна панель */
     .bottom-nav-bar {
+        width: 100%; /* Залишаємо ширину 100% від екрана, щоб вона не прокручувалася горизонтально */
+        left: 0;
+        right: 0;
         padding: 10px 15px;
         flex-wrap: wrap;
         gap: 10px;
     }
     .bottom-nav-bar .nav-button {
-        width: calc(50% - 5px);
+        width: calc(50% - 5px); /* Залишаємо адаптивними для панелі */
         min-width: unset;
         font-size: 14px;
         padding: 8px 10px;
