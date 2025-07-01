@@ -316,22 +316,29 @@ function applyTranslations(lang) {
         });
 
         // Check button text for page4.html and page4.1.html
-        const checkButton = document.querySelector('.check-button');
-        if (checkButton) {
-            const remainingAttempts = localStorage.getItem('remainingAttempts') || 3; // Get current attempts
+        const checkButton = document.querySelector('button.check-button'); // This targets both check buttons
+        const checkButtonPart1 = document.getElementById('checkButtonPart1'); // Explicitly for page4.html's check button
+
+        let actualCheckButton = null;
+
+        if (currentPage === 'page4.html' && checkButtonPart1) {
+            actualCheckButton = checkButtonPart1;
+        } else if (currentPage === 'page4.1.html' && checkButton) {
+            actualCheckButton = checkButton;
+        }
+
+        if (actualCheckButton) {
+            const remainingAttempts = parseInt(localStorage.getItem('remainingAttempts') || 3);
             let attemptsText = '';
 
-            if (parseInt(remainingAttempts) > 0) {
+            if (remainingAttempts > 0) {
                 attemptsText = ` (${remainingAttempts} ${translations[lang]['attemptsSuffix']})`;
             }
 
-            if (checkButton.dataset.state === 'nextPage') { // Custom state for next page button
-                checkButton.textContent = translations[lang]['nextPage'];
-            } else if (checkButton.dataset.state === 'toResults') { // Custom state for to results button
-                checkButton.textContent = translations[lang]['toResults'];
-            }
-            else { // Default check state
-                checkButton.textContent = translations[lang]['checkButtonPrefix'] + attemptsText;
+            if (actualCheckButton.dataset.state === 'toResults') {
+                actualCheckButton.textContent = translations[lang]['toResults'];
+            } else { // Default check state or if attempts are 0
+                actualCheckButton.textContent = translations[lang]['checkButtonPrefix'] + attemptsText;
             }
         }
     }
@@ -617,6 +624,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         axisButtons.forEach(button => {
             button.addEventListener('click', () => {
+                let remainingAttempts = parseInt(localStorage.getItem('remainingAttempts') || 3); // Get current attempts
+
+                // Do nothing if no attempts left to prevent changing answers
+                if (remainingAttempts <= 0) {
+                    return;
+                }
+
                 const inputValue = button.dataset.value;
                 const inputField = button.closest('.input-and-choices').querySelector('.question-input');
                 const acceptsMultiple = inputField.dataset.acceptMultiple === 'true';
@@ -705,6 +719,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     listItem.addEventListener('mouseout', () => listItem.style.backgroundColor = '');
                     listItem.addEventListener('click', (e) => {
                         e.stopPropagation();
+                        let remainingAttempts = parseInt(localStorage.getItem('remainingAttempts') || 3); // Get current attempts
+
+                        // Do nothing if no attempts left to prevent changing answers
+                        if (remainingAttempts <= 0) {
+                            return;
+                        }
+
                         button.textContent = listItem.textContent;
                         button.dataset.value = listItem.dataset.originalValue;
                         button.classList.remove('active');
@@ -716,6 +737,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 button.closest('.input-with-feedback').appendChild(dropdownList);
                 button.addEventListener('click', (e) => {
                     e.stopPropagation();
+                    let remainingAttempts = parseInt(localStorage.getItem('remainingAttempts') || 3); // Get current attempts
+
+                    // Do nothing if no attempts left to prevent opening dropdown
+                    if (remainingAttempts <= 0) {
+                        return;
+                    }
+
                     document.querySelectorAll('.dropdown-list').forEach(list => list.style.display = 'none');
                     document.querySelectorAll('.dropdown-button').forEach(btn => btn.classList.remove('active'));
 
@@ -757,10 +785,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Handle check button for page4.html (Image 1)
         if (currentPage === 'page4.html' && checkButtonPart1) {
+            // Initial text update for checkButtonPart1
+            let initialAttempts = parseInt(localStorage.getItem('remainingAttempts') || 3);
+            if (initialAttempts <= 0) {
+                checkButtonPart1.textContent = `${translations[savedLanguage]['checkButtonPrefix']} (0 ${translations[savedLanguage]['attemptsSuffix']})`;
+            } else {
+                checkButtonPart1.textContent = `${translations[savedLanguage]['checkButtonPrefix']} (${initialAttempts} ${translations[savedLanguage]['attemptsSuffix']})`;
+            }
+
             checkButtonPart1.addEventListener('click', () => {
                 let remainingAttempts = parseInt(localStorage.getItem('remainingAttempts') || 3);
+
+                // If no attempts left, just collect answers and prevent further checking feedback/decrement.
+                // The button should already reflect 0 attempts.
+                if (remainingAttempts <= 0) {
+                    // Still collect answers to ensure latest user input is saved, but don't apply feedback or decrement attempts.
+                    const answersCollected = collectAnswers(1);
+                    localStorage.setItem('image1Answers', JSON.stringify(answersCollected));
+                    return; // Exit, no checking action
+                }
+
                 const image1Data = KINEMATIC_PAIRS_DATA.find(data => data.imageName === selectedImages[0]);
-                const answersCollected = collectAnswers(1);
+                const answersCollected = collectAnswers(1); // Always collect latest answers
                 localStorage.setItem('image1Answers', JSON.stringify(answersCollected));
 
                 let allAnswersCorrectOnPage1 = true;
@@ -801,10 +847,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Handle check button for page4.1.html (Image 2)
         if (currentPage === 'page4.1.html' && checkButtonPart2) {
+            // Initial text and state update for checkButtonPart2
+            let initialAttempts = parseInt(localStorage.getItem('remainingAttempts') || 3);
+            if (initialAttempts <= 0) {
+                checkButtonPart2.textContent = translations[savedLanguage]['toResults'];
+                checkButtonPart2.dataset.state = 'toResults';
+            } else {
+                checkButtonPart2.textContent = `${translations[savedLanguage]['checkButtonPrefix']} (${initialAttempts} ${translations[savedLanguage]['attemptsSuffix']})`;
+                checkButtonPart2.dataset.state = 'check'; // Ensure it's 'check' initially if attempts > 0
+            }
+
+
             checkButtonPart2.addEventListener('click', () => {
                 let remainingAttempts = parseInt(localStorage.getItem('remainingAttempts') || 3);
 
-                // If button is already in "To Results" state, navigate
+                // Always collect the latest answers, regardless of attempts or button state
+                const currentImage2Answers = collectAnswers(2);
+                localStorage.setItem('image2Answers', JSON.stringify(currentImage2Answers));
+
+                // If button is in "To Results" state, navigate immediately
                 if (checkButtonPart2.dataset.state === 'toResults') {
                     const finalScore = calculateAndSaveFinalScore(selectedImages);
                     localStorage.setItem('finalScore', finalScore);
@@ -813,13 +874,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     localStorage.removeItem('image1Answers');
                     localStorage.removeItem('image2Answers');
                     window.location.href = 'page5.html';
-                    return;
+                    return; // Exit after navigating
                 }
 
-                // Collect answers for Image 2
-                const currentImage2Answers = collectAnswers(2);
-                localStorage.setItem('image2Answers', JSON.stringify(currentImage2Answers));
-
+                // If not in 'toResults' state, proceed with checking logic
                 const image1Data = KINEMATIC_PAIRS_DATA.find(data => data.imageName === selectedImages[0]);
                 const image2Data = KINEMATIC_PAIRS_DATA.find(data => data.imageName === selectedImages[1]);
 
@@ -843,8 +901,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!isCorrect) allAnswersCorrectOnPage2 = false;
                 });
 
-                // Decrement attempts only if answers on current page are NOT all correct
-                if (!allAnswersCorrectOnPage2) {
+                // Decrement attempts only if answers on current page are NOT all correct AND remainingAttempts > 0
+                if (!allAnswersCorrectOnPage2 && remainingAttempts > 0) {
                     remainingAttempts--;
                     localStorage.setItem('remainingAttempts', remainingAttempts);
                 }
@@ -852,7 +910,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Check combined correctness after this attempt
                 const combinedAllAnswersCorrect = checkAllAnswersCombined(image1Data, image2Data, selectedImages);
 
-                // Update button text and state
+                // Update button text and state based on correctness or remaining attempts
                 if (combinedAllAnswersCorrect) {
                     checkButtonPart2.textContent = translations[savedLanguage]['toResults'];
                     checkButtonPart2.dataset.state = 'toResults';
@@ -862,28 +920,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     checkButtonPart2.dataset.state = 'toResults';
                 } else {
                     checkButtonPart2.textContent = `${translations[savedLanguage]['checkButtonPrefix']} (${remainingAttempts} ${translations[savedLanguage]['attemptsSuffix']})`;
-                    checkButtonPart2.dataset.state = 'check'; // Reset state to check
+                    checkButtonPart2.dataset.state = 'check'; // Stay in 'check' state
                 }
             });
-
-            // Initial text update for checkButtonPart2
-            let initialAttempts = parseInt(localStorage.getItem('remainingAttempts') || 3);
-            let initialButtonText = `${translations[savedLanguage]['checkButtonPrefix']} (${initialAttempts} ${translations[savedLanguage]['attemptsSuffix']})`;
-            if (initialAttempts <= 0) {
-                initialButtonText = translations[savedLanguage]['toResults'];
-                checkButtonPart2.dataset.state = 'toResults';
-            }
-            checkButtonPart2.textContent = initialButtonText;
-        }
-
-        // Initial text update for checkButtonPart1 (if on page4.html)
-        if (currentPage === 'page4.html' && checkButtonPart1) {
-            let initialAttempts = parseInt(localStorage.getItem('remainingAttempts') || 3);
-            let initialButtonText = `${translations[savedLanguage]['checkButtonPrefix']} (${initialAttempts} ${translations[savedLanguage]['attemptsSuffix']})`;
-            if (initialAttempts <= 0) {
-                initialButtonText = `${translations[savedLanguage]['checkButtonPrefix']} (0 ${translations[savedLanguage]['attemptsSuffix']})`;
-            }
-            checkButtonPart1.textContent = initialButtonText;
         }
     }
 });
