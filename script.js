@@ -739,14 +739,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 };
 
-                // Якщо спроб більше немає, переходимо на сторінку результатів
-                if (remainingAttempts <= 0) {
-                    let totalFinalScore = 0;
+                // If button already says "GO TO RESULTS", then just navigate
+                if (checkButton.textContent === translations[savedLanguage]['toResults']) {
+                    let totalFinalScore = 0; // Recalculate score before going to results
                     if (selectedImagesData.length === 2) {
                         const image1Data = selectedImagesData[0];
                         const image2Data = selectedImagesData[1];
 
-                        // Остання перевірка всіх відповідей перед переходом
+                        // Recalculate score for the final result page
                         if (compareAxisAnswers(document.getElementById('q1_ans1').value, image1Data.q1_translation)) totalFinalScore++;
                         if (compareAxisAnswers(document.getElementById('q2_ans1').value, image1Data.q2_rotation)) totalFinalScore++;
                         if (document.querySelectorAll('[data-qtype="q3"]')[0].dataset.value === image1Data.q3_impossible_moves) totalFinalScore++;
@@ -761,10 +761,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     localStorage.setItem('finalScore', totalFinalScore);
                     localStorage.setItem('testEndTime', new Date().getTime());
-                    localStorage.removeItem('remainingAttempts'); // Скидаємо спроби для наступного тесту
+                    localStorage.removeItem('remainingAttempts'); // Clear attempts for next test
                     window.location.href = 'page5.html';
-                    return; // Виходимо з функції
+                    return; // Exit function
                 }
+
+                // Initialize a flag to track overall correctness for this attempt
+                let allAnswersCorrectForThisAttempt = true;
 
                 // --- Виконуємо перевірку для поточної спроби ---
                 if (selectedImagesData.length === 2) {
@@ -773,34 +776,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Відповіді для Зображення 1
                     const userQ1Ans1 = document.getElementById('q1_ans1');
-                    const userQ2Ans1 = document.getElementById('q2_ans1');
-                    const userQ3Btn1 = document.querySelectorAll('[data-qtype="q3"]')[0];
-                    const userQ4Btn1 = document.querySelectorAll('[data-qtype="q4"]')[0]; // Corrected line
-                    const userQ5Btn1 = document.querySelectorAll('[data-qtype="q5"]')[0];
+                    const isQ1Ans1Correct = compareAxisAnswers(userQ1Ans1.value, image1Data.q1_translation);
+                    applyFeedback(userQ1Ans1, isQ1Ans1Correct);
+                    if (!isQ1Ans1Correct) allAnswersCorrectForThisAttempt = false;
 
-                    // Застосовуємо зворотний зв'язок для Зображення 1
-                    applyFeedback(userQ1Ans1, compareAxisAnswers(userQ1Ans1.value, image1Data.q1_translation));
-                    applyFeedback(userQ2Ans1, compareAxisAnswers(userQ2Ans1.value, image1Data.q2_rotation));
-                    applyFeedback(userQ3Btn1, userQ3Btn1.dataset.value === image1Data.q3_impossible_moves);
-                    applyFeedback(userQ4Btn1, userQ4Btn1.dataset.value === image1Data.q4_class);
-                    applyFeedback(userQ5Btn1, userQ5Btn1.dataset.value === image1Data.q5_type);
+                    const userQ2Ans1 = document.getElementById('q2_ans1');
+                    const isQ2Ans1Correct = compareAxisAnswers(userQ2Ans1.value, image1Data.q2_rotation);
+                    applyFeedback(userQ2Ans1, isQ2Ans1Correct);
+                    if (!isQ2Ans1Correct) allAnswersCorrectForThisAttempt = false;
+
+                    const userQ3Btn1 = document.querySelectorAll('[data-qtype="q3"]')[0];
+                    const isQ3Btn1Correct = userQ3Btn1.dataset.value === image1Data.q3_impossible_moves;
+                    applyFeedback(userQ3Btn1, isQ3Btn1Correct);
+                    if (!isQ3Btn1Correct) allAnswersCorrectForThisAttempt = false;
+
+                    const userQ4Btn1 = document.querySelectorAll('[data-qtype="q4"]')[0];
+                    const isQ4Btn1Correct = userQ4Btn1.dataset.value === image1Data.q4_class;
+                    applyFeedback(userQ4Btn1, isQ4Btn1Correct);
+                    if (!isQ4Btn1Correct) allAnswersCorrectForThisAttempt = false;
+
+                    const userQ5Btn1 = document.querySelectorAll('[data-qtype="q5"]')[0];
+                    const isQ5Btn1Correct = userQ5Btn1.dataset.value === image1Data.q5_type;
+                    applyFeedback(userQ5Btn1, isQ5Btn1Correct);
+                    if (!isQ5Btn1Correct) allAnswersCorrectForThisAttempt = false;
 
                     // Відповіді для Зображення 2
                     const userQ1Ans2 = document.getElementById('q1_ans2');
-                    const userQ2Ans2 = document.getElementById('q2_ans2');
-                    const userQ3Btn2 = document.querySelectorAll('[data-qtype="q3"]')[1];
-                    const userQ4Btn2 = document.querySelectorAll('[data-qtype="q4"]')[1];
-                    const userQ5Btn2 = document.querySelectorAll('[data-qtype="q5"]')[1]; // Corrected line
+                    const isQ1Ans2Correct = compareAxisAnswers(userQ1Ans2.value, image2Data.q1_translation);
+                    applyFeedback(userQ1Ans2, isQ1Ans2Correct);
+                    if (!isQ1Ans2Correct) allAnswersCorrectForThisAttempt = false;
 
-                    // Застосовуємо зворотний зв'язок для Зображення 2
-                    applyFeedback(userQ1Ans2, compareAxisAnswers(userQ1Ans2.value, image2Data.q1_translation));
-                    applyFeedback(userQ2Ans2, compareAxisAnswers(userQ2Ans2.value, image2Data.q2_rotation));
-                    applyFeedback(userQ3Btn2, userQ3Btn2.dataset.value === image2Data.q3_impossible_moves);
-                    applyFeedback(userQ4Btn2, userQ4Btn2.dataset.value === image2Data.q4_class);
-                    applyFeedback(userQ5Btn2, userQ5Btn2.dataset.value === image2Data.q5_type);
+                    const userQ2Ans2 = document.getElementById('q2_ans2');
+                    const isQ2Ans2Correct = compareAxisAnswers(userQ2Ans2.value, image2Data.q2_rotation);
+                    applyFeedback(userQ2Ans2, isQ2Ans2Correct);
+                    if (!isQ2Ans2Correct) allAnswersCorrectForThisAttempt = false;
+
+                    const userQ3Btn2 = document.querySelectorAll('[data-qtype="q3"]')[1];
+                    const isQ3Btn2Correct = userQ3Btn2.dataset.value === image2Data.q3_impossible_moves;
+                    applyFeedback(userQ3Btn2, isQ3Btn2Correct);
+                    if (!isQ3Btn2Correct) allAnswersCorrectForThisAttempt = false;
+
+                    const userQ4Btn2 = document.querySelectorAll('[data-qtype="q4"]')[1];
+                    const isQ4Btn2Correct = userQ4Btn2.dataset.value === image2Data.q4_class;
+                    applyFeedback(userQ4Btn2, isQ4Btn2Correct);
+                    if (!isQ4Btn2Correct) allAnswersCorrectForThisAttempt = false;
+
+                    const userQ5Btn2 = document.querySelectorAll('[data-qtype="q5"]')[1];
+                    const isQ5Btn2Correct = userQ5Btn2.dataset.value === image2Data.q5_type;
+                    applyFeedback(userQ5Btn2, isQ5Btn2Correct);
+                    if (!isQ5Btn2Correct) allAnswersCorrectForThisAttempt = false;
                 }
 
-                // Зменшуємо кількість спроб
+                // If all answers are correct, change button text and return
+                if (allAnswersCorrectForThisAttempt) {
+                    checkButton.textContent = translations[savedLanguage]['toResults'];
+                    localStorage.setItem('testEndTime', new Date().getTime()); // Record end time immediately on correct completion
+                    // Do NOT decrement remainingAttempts here, as they successfully completed
+                    return; // Stop further processing in this click handler
+                }
+
+                // Otherwise (if not all answers are correct), decrement attempts and update button text as before
                 remainingAttempts--;
                 localStorage.setItem('remainingAttempts', remainingAttempts);
 
