@@ -1,10 +1,8 @@
-// Функція для отримання назви поточної сторінки
 function getCurrentPageName() {
     const path = window.location.pathname;
     return path.substring(path.lastIndexOf('/') + 1);
 }
 
-// Дані про правильні відповіді для кожної кінематичної пари
 const KINEMATIC_PAIRS_DATA = [
     {
         imageName: "1.jpg",
@@ -72,25 +70,20 @@ const KINEMATIC_PAIRS_DATA = [
     },
 ];
 
-// Об'єкт для зберігання перекладів
 const translations = {
     'uk': {
-        // General
         'prevStep': 'ПОПЕРЕДНІЙ КРОК',
         'nextStep': 'НАСТУПНИЙ КРОК',
 
-        // index.html
         'mainTitleIndex': 'Інтерактивне практичне завдання до теми 2',
         'enterYourName': 'Введіть ваше ім\'я',
         'startButton': 'Розпочати',
 
-        // page2.html
         'mainTitlePage2': 'Інтерактивне практичне завдання до теми 2',
         'subtitlePage2': 'Тема: Кінематичні пари і кінематичні ланцюги',
         'scorePrefix': 'Кількість балів: ',
         'chooseLanguage': 'Оберіть мову:',
 
-        // page3.html
         'page3Title': 'Кінематичні пари і кінематичні ланцюги',
         'step1Heading': 'Крок 1',
         'theorySubheading': 'Теоретичні відомості',
@@ -108,7 +101,6 @@ const translations = {
         'theoryP12': 'Всі кінематичні пари розділяються на п’ять класів. Номер класу кінематичної пари визначається числом умов зв’язків, що накладені на рух одної ланки пари відносно іншої. Звідси слідує, що пара I класу може бути названа п’ятирухомою, пара II класу — чотирьохрухомою і т.д.',
         'theoryP13': 'Для вирішення питання, до якого класу відноситься та чи інша кінематична пара, потрібно діяти так. Одну із ланок, що входить до кінематичної пари, уявити нерухомою. пов\'язати з нею систему координат Оxyz і, орієнтуючись на неї, прослідкувати, які рухи другої ланки пари неможливі із шести рухів, які вона мала б можливість здійснювати, не входячи в пару. Число цих неможливих рухів (як рівне числу зв’язків в парі) представляє собою номер класу пари.',
 
-        // page4.html & page4.1.html
         'stepTitlePage4': 'Крок 2',
         'taskTitlePage4_1': 'Завдання для студента (Зображення 1)',
         'taskTitlePage4_2': 'Завдання для студента (Зображення 2)',
@@ -120,14 +112,13 @@ const translations = {
         'checkButtonPrefix': 'ПЕРЕВІРИТИ',
         'attemptsSuffix': 'спроб',
         'toResults': 'ПЕРЕЙТИ ДО РЕЗУЛЬТАТІВ',
-        'nextPage': 'НАСТУПНИЙ КРОК', // Added for next page button on page4.html
+        'nextPage': 'НАСТУПНИЙ КРОК',
         'chooseQuantity': 'Оберіть кількість',
         'chooseClass': 'Оберіть клас',
         'chooseType': 'Оберіть тип',
         'noAxis': 'Жодної',
         'chooseAxisPlaceholder': 'Оберіть осі',
 
-        // page5.html
         'testResultsTitle': 'Ваші результати',
         'startTime': 'Час початку тестування: ',
         'endTime': 'Час завершення тестування: ',
@@ -137,22 +128,18 @@ const translations = {
         'points': ' балів'
     },
     'en': {
-        // General
         'prevStep': 'PREVIOUS STEP',
         'nextStep': 'NEXT STEP',
 
-        // index.html
         'mainTitleIndex': 'Interactive practical task for topic 2',
         'enterYourName': 'Enter your name',
         'startButton': 'Start',
 
-        // page2.html
         'mainTitlePage2': 'Interactive practical task for topic 2',
         'subtitlePage2': 'Topic: Kinematic pairs and kinematic chains',
         'scorePrefix': 'Score: ',
         'chooseLanguage': 'Choose language:',
 
-        // page3.html
         'page3Title': 'Kinematic Pairs and Kinematic Chains',
         'step1Heading': 'Step 1',
         'theorySubheading': 'Theoretical Information',
@@ -170,7 +157,6 @@ const translations = {
         'theoryP12': 'All kinematic pairs are divided into five classes. The class number of a kinematic pair is determined by the number of constraint conditions imposed on the movement of one link of the pair relative to the other. It follows that a class I pair can be called five-movable, a class II pair — four-movable, and so on.',
         'theoryP13': 'To determine the class of a kinematic pair, proceed as follows. Imagine one of the links forming the kinematic pair as fixed. Associate a coordinate system Oxyz with it and, guided by it, observe which movements of the second link of the pair are impossible out of the six movements it would be able to perform without being part of the pair. The number of these impossible movements (equal to the number of constraints in the pair) represents the class number of the pair.',
 
-        // page4.html & page4.1.html
         'stepTitlePage4': 'Крок 2',
         'taskTitlePage4_1': 'Student Task (Image 1)',
         'taskTitlePage4_2': 'Student Task (Image 2)',
@@ -182,14 +168,13 @@ const translations = {
         'checkButtonPrefix': 'CHECK',
         'attemptsSuffix': 'attempts',
         'toResults': 'GO TO RESULTS',
-        'nextPage': 'NEXT STEP', // Added for next page button on page4.html
+        'nextPage': 'NEXT STEP',
         'chooseQuantity': 'Choose quantity',
         'chooseClass': 'Choose class',
         'chooseType': 'Choose type',
         'noAxis': 'None',
         'chooseAxisPlaceholder': 'Select axes',
 
-        // page5.html
         'testResultsTitle': 'Your Results',
         'startTime': 'Test start time: ',
         'endTime': 'Test end time: ',
@@ -200,11 +185,8 @@ const translations = {
     }
 };
 
-
-// Функція для застосування перекладів на поточній сторінці
 function applyTranslations(lang) {
     const currentPage = getCurrentPageName();
-    // index.html specific translations
     if (currentPage === 'index.html' || currentPage === '') {
         const mainTitle = document.querySelector('h1');
         if (mainTitle) mainTitle.textContent = translations[lang]['mainTitleIndex'];
@@ -218,7 +200,6 @@ function applyTranslations(lang) {
             startButton.textContent = translations[lang]['startButton'];
         }
     }
-    // page2.html specific translations
     else if (currentPage === 'page2.html') {
         const mainTitlePage2 = document.querySelector('h1');
         if (mainTitlePage2) mainTitlePage2.textContent = translations[lang]['mainTitlePage2'];
@@ -239,7 +220,6 @@ function applyTranslations(lang) {
             }
         }
     }
-    // page3.html specific translations
     else if (currentPage === 'page3.html') {
         const page3Title = document.querySelector('.page-title');
         if (page3Title) page3Title.textContent = translations[lang]['page3Title'];
@@ -265,21 +245,19 @@ function applyTranslations(lang) {
         if (theoryParagraphs[11]) theoryParagraphs[11].textContent = translations[lang]['theoryP12'];
         if (theoryParagraphs[12]) theoryParagraphs[12].textContent = translations[lang]['theoryP13'];
     }
-    // page4.html and page4.1.html specific translations
     else if (currentPage === 'page4.html' || currentPage === 'page4.1.html') {
         const stepTitlePage4 = document.querySelector('.step-title');
         if (stepTitlePage4) stepTitlePage4.textContent = translations[lang]['stepTitlePage4'];
 
         const taskTitlePage4 = document.querySelector('.task-title');
         if (taskTitlePage4) {
-            if (currentPage === 'page4.html') { // Check for the first part's name
+            if (currentPage === 'page4.html') {
                 taskTitlePage4.textContent = translations[lang]['taskTitlePage4_1'];
-            } else { // For the second part
+            } else {
                 taskTitlePage4.textContent = translations[lang]['taskTitlePage4_2'];
             }
         }
 
-        // Question texts
         const questionTexts = document.querySelectorAll('.question-block .question-text');
         if (questionTexts[0]) questionTexts[0].textContent = translations[lang]['q1Translation'];
         if (questionTexts[1]) questionTexts[1].textContent = translations[lang]['q2Rotation'];
@@ -287,7 +265,6 @@ function applyTranslations(lang) {
         if (questionTexts[3]) questionTexts[3].textContent = translations[lang]['q4Class'];
         if (questionTexts[4]) questionTexts[4].textContent = translations[lang]['q5Type'];
 
-        // Axis buttons "Жодної" and input placeholders
         document.querySelectorAll('.axis-button[data-value="Жодної"]').forEach(btn => {
             btn.textContent = translations[lang]['noAxis'];
         });
@@ -295,26 +272,22 @@ function applyTranslations(lang) {
             input.placeholder = translations[lang]['chooseAxisPlaceholder'];
         });
 
-
-        // Dropdown buttons
         document.querySelectorAll('.dropdown-button').forEach(button => {
             const qType = button.dataset.qtype;
-            const currentVal = button.dataset.value; // Get currently selected value
+            const currentVal = button.dataset.value;
 
-            if (!currentVal) { // If no value is selected, update placeholder
+            if (!currentVal) {
                 if (qType === 'q3') button.textContent = translations[lang]['chooseQuantity'];
                 else if (qType === 'q4') button.textContent = translations[lang]['chooseClass'];
                 else if (qType === 'q5') button.textContent = translations[lang]['chooseType'];
             } else {
-                // If a value is selected, ensure it's translated if it's one of the options
                 if (currentVal === 'Нижча' && lang === 'en') button.textContent = 'Lower';
                 if (currentVal === 'Вища' && lang === 'en') button.textContent = 'Higher';
             }
         });
 
-        // Check button text for page4.html and page4.1.html
-        const checkButton = document.querySelector('button.check-button'); // This targets both check buttons
-        const checkButtonPart1 = document.getElementById('checkButtonPart1'); // Explicitly for page4.html's check button
+        const checkButton = document.querySelector('button.check-button');
+        const checkButtonPart1 = document.getElementById('checkButtonPart1');
 
         let actualCheckButton = null;
 
@@ -339,7 +312,6 @@ function applyTranslations(lang) {
             }
         }
     }
-    // page5.html specific translations
     else if (currentPage === 'page5.html') {
         const resultsTitle = document.querySelector('.results-title');
         if (resultsTitle) resultsTitle.textContent = translations[lang]['testResultsTitle'];
@@ -364,22 +336,19 @@ function applyTranslations(lang) {
         if (finalScoreP && finalScoreSpan) finalScoreP.innerHTML = translations[lang]['finalScorePrefix'] + finalScoreSpan.outerHTML + translations[lang]['points'];
     }
 
-    // Common navigation buttons for all pages
     const prevButtonNav = document.querySelector('.bottom-nav-bar .nav-button.gray');
     const nextButtonNav = document.querySelector('.bottom-nav-bar .nav-button.blue');
 
     if (prevButtonNav) prevButtonNav.textContent = translations[lang]['prevStep'];
-    // nextButtonNav exists on page2, page3, page4, page5
     if (nextButtonNav) {
         if (currentPage === 'page2.html' || currentPage === 'page3.html' || currentPage === 'page5.html') {
             nextButtonNav.textContent = translations[lang]['nextStep'];
-        } else if (currentPage === 'page4.html') { // next button on page4.html
-            nextButtonNav.textContent = translations[lang]['nextPage']; // Explicitly set to "НАСТУПНИЙ КРОК"
+        } else if (currentPage === 'page4.html') {
+            nextButtonNav.textContent = translations[lang]['nextPage'];
         }
     }
 }
 
-// Допоміжна функція для очищення візуального зворотного зв'язку
 function clearFeedback(element) {
     if (element) {
         element.classList.remove('correct-answer', 'incorrect-answer');
@@ -391,7 +360,6 @@ function clearFeedback(element) {
     }
 }
 
-// Допоміжна функція для порівняння відповідей (для осей)
 const compareAxisAnswers = (userAnsString, correctAnsString) => {
     const userArray = userAnsString.split(', ').filter(Boolean).sort();
     const correctArray = correctAnsString.split(', ').filter(Boolean).sort();
@@ -399,7 +367,6 @@ const compareAxisAnswers = (userAnsString, correctAnsString) => {
         userArray.every((val, index) => val === correctArray[index]);
 };
 
-// Допоміжна функція для застосування візуального зворотного зв'язку
 const applyFeedback = (element, isCorrect) => {
     clearFeedback(element);
     const parentContainer = element.closest('.input-with-feedback');
@@ -420,11 +387,9 @@ const applyFeedback = (element, isCorrect) => {
     }
 };
 
-// NEW: Helper functions to disable/enable inputs and non-nav/non-close/non-check buttons within a container
 function disablePageElements(containerSelector) {
     const container = document.querySelector(containerSelector);
     if (container) {
-        // Виключаємо кнопку закриття оверлею та кнопки перевірки з блокування
         container.querySelectorAll('input, button:not(.nav-button):not(.close-overlay-button):not(.check-button)').forEach(element => {
             element.disabled = true;
             element.style.cursor = 'not-allowed';
@@ -440,12 +405,9 @@ function disablePageElements(containerSelector) {
         });
     }
 }
-
-// NEW: Helper function to enable inputs and non-nav/non-close/non-check buttons within a container
 function enablePageElements(containerSelector) {
     const container = document.querySelector(containerSelector);
     if (container) {
-        // Виключаємо кнопку закриття оверлею та кнопки перевірки з розблокування (вони не мають бути заблоковані взагалі)
         container.querySelectorAll('input, button:not(.nav-button):not(.close-overlay-button):not(.check-button)').forEach(element => {
             element.disabled = false;
             element.style.cursor = '';
@@ -454,7 +416,6 @@ function enablePageElements(containerSelector) {
     }
 }
 
-// NEW: Helper functions to disable/enable navigation buttons specifically
 function disableNavButtons() {
     const navButtons = document.querySelectorAll('.bottom-nav-bar .nav-button');
     navButtons.forEach(button => {
@@ -471,17 +432,12 @@ function enableNavButtons() {
     });
 }
 
-
 document.addEventListener('DOMContentLoaded', () => {
     const currentPage = getCurrentPageName();
     const savedLanguage = localStorage.getItem('language') || 'uk';
 
-    // Apply language on initial load for any page
     applyTranslations(savedLanguage);
 
-    // --- Логіка навігації сторінками ---
-
-    // Обробка кнопки "Розпочати" на index.html
     if (currentPage === 'index.html' || currentPage === '') {
         const startButton = document.getElementById('startButton');
         if (startButton) {
@@ -492,12 +448,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     localStorage.setItem('userName', userName);
                     localStorage.removeItem('testStartTime');
                     localStorage.removeItem('testEndTime');
-                    localStorage.removeItem('selectedImages'); // Clear selected images for new test
+                    localStorage.removeItem('selectedImages');
                     localStorage.removeItem('finalScore');
-                    localStorage.setItem('remainingAttempts', 3); // Initialize attempts here
-                    localStorage.removeItem('image1Answers'); // Clear previous answers
-                    localStorage.removeItem('image2Answers'); // Clear previous answers
-                    localStorage.removeItem('image1CompletedCorrectly'); // Clear this flag on new test start
+                    localStorage.setItem('remainingAttempts', 3);
+                    localStorage.removeItem('image1Answers');
+                    localStorage.removeItem('image2Answers');
+                    localStorage.removeItem('image1CompletedCorrectly');
                     window.location.href = 'page2.html';
                 } else {
                     alert(savedLanguage === 'uk' ? 'Будь ласка, введіть ваше ім\'я.' : 'Please enter your name.');
@@ -506,7 +462,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Common "ПОПЕРЕДНІЙ КРОК" button logic
     const prevButton = document.querySelector('.nav-button.gray');
     if (prevButton) {
         prevButton.addEventListener('click', () => {
@@ -514,15 +469,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = 'index.html';
             } else if (currentPage === 'page3.html') {
                 window.location.href = 'page2.html';
-            } else if (currentPage === 'page4.html') { // Page for Image 1
+            } else if (currentPage === 'page4.html') {
                 window.location.href = 'page3.html';
-            } else if (currentPage === 'page4.1.html') { // Page for Image 2
-                // When going back from page4.1.html, save current answers for image 2
+            } else if (currentPage === 'page4.1.html') {
                 const answersToSave = collectAnswers(2);
                 localStorage.setItem('image2Answers', JSON.stringify(answersToSave));
-                window.location.href = 'page4.html'; // Navigate back to page4.html
+                window.location.href = 'page4.html';
             } else if (currentPage === 'page5.html') {
-                // If going back from results, clear test data and go to index
                 localStorage.removeItem('userName');
                 localStorage.removeItem('testStartTime');
                 localStorage.removeItem('testEndTime');
@@ -537,7 +490,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // General "НАСТУПНИЙ КРОК" button logic (for page2, page3, page5, and page4.1.html)
     const nextButtonGeneral = document.querySelector('.nav-button.blue');
     if (nextButtonGeneral) {
         nextButtonGeneral.addEventListener('click', () => {
@@ -545,7 +497,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!localStorage.getItem('testStartTime')) {
                     localStorage.setItem('testStartTime', new Date().getTime());
                 }
-                // Randomly select images for the test once
                 let selectedImages = JSON.parse(localStorage.getItem('selectedImages'));
                 if (!selectedImages) {
                     const allImageNames = KINEMATIC_PAIRS_DATA.map(pair => pair.imageName);
@@ -559,11 +510,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     localStorage.setItem('selectedImages', JSON.stringify(selectedImages));
                 }
-                window.location.href = 'page3.html'; // Go to theory page
+                window.location.href = 'page3.html';
             } else if (currentPage === 'page3.html') {
-                window.location.href = 'page4.html'; // Go to the first part of the questions (page4.html)
+                window.location.href = 'page4.html';
             }
-            // Logic for page4.html's "Next Step" button is now handled by its specific listener
             else if (currentPage === 'page4.1.html') {
                 const answersToSave = collectAnswers(2);
                 localStorage.setItem('image2Answers', JSON.stringify(answersToSave));
@@ -577,7 +527,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = 'page5.html';
             }
             else if (currentPage === 'page5.html') {
-                // If navigating forward from results, restart the test
                 localStorage.removeItem('userName');
                 localStorage.removeItem('testStartTime');
                 localStorage.removeItem('testEndTime');
@@ -592,7 +541,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Функціонал таймера та відображення балів для page5.html ---
     if (currentPage === 'page5.html') {
         const startTimeElement = document.getElementById('startTime');
         const endTimeElement = document.getElementById('endTime');
@@ -624,8 +572,6 @@ document.addEventListener('DOMContentLoaded', () => {
             finalScoreElement.textContent = '0';
         }
     }
-
-    // --- Language selection for page2.html ---
     if (currentPage === 'page2.html') {
         const ukFlag = document.querySelector('img[src="images/ukraine.svg"]');
         const ukFlagIcon = document.querySelector('img[src="images/uk.png"]');
@@ -644,8 +590,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
-
-    // --- Логіка для page4.html (Зображення 1) та page4.1.html (Зображення 2) ---
     if (currentPage === 'page4.html' || currentPage === 'page4.1.html') {
         const selectedImages = JSON.parse(localStorage.getItem('selectedImages'));
         const imageElement = document.querySelector('.question-image');
@@ -675,7 +619,6 @@ document.addEventListener('DOMContentLoaded', () => {
             currentImageData = KINEMATIC_PAIRS_DATA.find(data => data.imageName === currentImageName);
             document.title = translations[savedLanguage]['stepTitlePage4'] + ' - ' + translations[savedLanguage]['taskTitlePage4_1'];
 
-            // --- Initial state for page4.html ---
             if (nextToPart2Button) nextToPart2Button.style.display = 'none';
             if (successMessageOverlay) successMessageOverlay.style.display = 'none';
 
@@ -685,34 +628,32 @@ document.addEventListener('DOMContentLoaded', () => {
             if (image1CompletedCorrectly) {
                 if (successMessageOverlay) successMessageOverlay.style.display = 'flex';
                 if (nextToPart2Button) nextToPart2Button.style.display = 'block';
-                disablePageElements('.page4-container'); // Disable other inputs
-                if (checkButtonPart1) { // Control check button state manually
+                disablePageElements('.page4-container');
+                if (checkButtonPart1) {
                     checkButtonPart1.disabled = true;
                     checkButtonPart1.classList.add('disabled-input-button');
                 }
                 disableNavButtons();
-            } else if (remainingAttempts <= 0) { // If attempts are 0 and not completed correctly
-                disablePageElements('.page4-container'); // Disable other inputs
-                if (checkButtonPart1) { // Control check button state manually
-                    checkButtonPart1.textContent = translations[savedLanguage]['toResults']; // NEW: Change text to "Go to Results"
-                    checkButtonPart1.dataset.state = 'toResults'; // NEW: Set state
-                    checkButtonPart1.disabled = false; // NEW: Enable the button
-                    checkButtonPart1.classList.remove('disabled-input-button'); // NEW: Ensure it looks enabled
+            } else if (remainingAttempts <= 0) {
+                disablePageElements('.page4-container');
+                if (checkButtonPart1) {
+                    checkButtonPart1.textContent = translations[savedLanguage]['toResults'];
+                    checkButtonPart1.dataset.state = 'toResults';
+                    checkButtonPart1.disabled = false;
+                    checkButtonPart1.classList.remove('disabled-input-button');
                 }
-                // Hide next step button as we go directly to results
                 if (nextToPart2Button) {
-                    nextToPart2Button.style.display = 'none'; // NEW: Hide next step button
+                    nextToPart2Button.style.display = 'none'; 
                 }
-                enableNavButtons(); // Ensure nav buttons are enabled after disabling elements
-            } else { // Attempts > 0 and not completed
-                enablePageElements('.page4-container'); // Ensure other inputs are enabled
-                if (checkButtonPart1) { // Control check button state manually
+                enableNavButtons();
+            } else {
+                enablePageElements('.page4-container');
+                if (checkButtonPart1) {
                     checkButtonPart1.disabled = false;
                     checkButtonPart1.classList.remove('disabled-input-button');
                 }
             }
 
-            // Add event listener for close button
             if (closeOverlayButton) {
                 closeOverlayButton.addEventListener('click', () => {
                     if (successMessageOverlay) {
@@ -722,7 +663,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
-            // NEW: Specific click listener for nextToPart2Button on page4.html
             if (nextToPart2Button) {
                 nextToPart2Button.addEventListener('click', () => {
                     const answersToSave = collectAnswers(1);
@@ -732,7 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
 
-        } else { // currentPage === 'page4.1.html'
+        } else {
             imageNumForData = 2;
             currentImageName = selectedImages[1];
             currentImageData = KINEMATIC_PAIRS_DATA.find(data => data.imageName === currentImageName);
@@ -740,19 +680,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let remainingAttempts = parseInt(localStorage.getItem('remainingAttempts') || 3);
             if (checkButtonPart2) {
-                // Determine initial button text and state based on attempts or saved state
                 if (remainingAttempts <= 0 || checkButtonPart2.dataset.state === 'toResults') {
                     checkButtonPart2.textContent = translations[savedLanguage]['toResults'];
                     checkButtonPart2.dataset.state = 'toResults';
-                    checkButtonPart2.disabled = false; // Should be clickable
-                    checkButtonPart2.classList.remove('disabled-input-button'); // Should look enabled
-                    disablePageElements('.page4-container'); // Disable other inputs
+                    checkButtonPart2.disabled = false;
+                    checkButtonPart2.classList.remove('disabled-input-button');
+                    disablePageElements('.page4-container');
                 } else {
                     checkButtonPart2.textContent = `${translations[savedLanguage]['checkButtonPrefix']} (${remainingAttempts} ${translations[savedLanguage]['attemptsSuffix']})`;
                     checkButtonPart2.dataset.state = 'check';
-                    checkButtonPart2.disabled = false; // Should be clickable for checking
-                    checkButtonPart2.classList.remove('disabled-input-button'); // Should look enabled
-                    enablePageElements('.page4-container'); // Ensure inputs are enabled for interaction
+                    checkButtonPart2.disabled = false;
+                    checkButtonPart2.classList.remove('disabled-input-button');
+                    enablePageElements('.page4-container');
                 }
             }
         }
@@ -813,7 +752,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const savedAnswers = JSON.parse(localStorage.getItem('image2Answers'));
             restoreAnswers(2, savedAnswers);
         }
-
 
         const dropdownOptions = {
             q3: ["1", "2", "3", "4", "5", "6"],
@@ -912,8 +850,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-
-        // Handle check button for page4.html (Image 1)
         if (currentPage === 'page4.html' && checkButtonPart1) {
             let initialAttempts = parseInt(localStorage.getItem('remainingAttempts') || 3);
             if (initialAttempts <= 0) {
@@ -928,16 +864,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             checkButtonPart1.addEventListener('click', () => {
-                // If button is already in "To Results" state, navigate immediately
                 if (checkButtonPart1.dataset.state === 'toResults') {
-                    console.log('Navigating to results from page4.html via "To Results" button.'); // DEBUG LOG
+                    console.log('Navigating to results from page4.html via "To Results" button.');
                     const finalScore = calculateAndSaveFinalScore(selectedImages);
                     localStorage.setItem('finalScore', finalScore);
                     localStorage.setItem('testEndTime', new Date().getTime());
                     localStorage.removeItem('remainingAttempts');
-                    localStorage.removeItem('image1Answers'); // Keep for scoring on page5 if this path is taken
-                    localStorage.removeItem('image2Answers'); // Clear image2 answers as it's not reached
-                    localStorage.removeItem('image1CompletedCorrectly'); // Clear this flag
+                    localStorage.removeItem('image1Answers');
+                    localStorage.removeItem('image2Answers');
+                    localStorage.removeItem('image1CompletedCorrectly');
                     window.location.href = 'page5.html';
                     return;
                 }
@@ -979,18 +914,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 let buttonText = `${translations[savedLanguage]['checkButtonPrefix']} (${remainingAttempts} ${translations[savedLanguage]['attemptsSuffix']})`;
 
-                // Logic to immediately go to results if attempts exhausted for Image 1
                 if (remainingAttempts <= 0) {
                     buttonText = translations[savedLanguage]['toResults'];
                     checkButtonPart1.dataset.state = 'toResults';
-                    disablePageElements('.page4-container'); // Disable inputs
-                    checkButtonPart1.disabled = false; // Enable button
-                    checkButtonPart1.classList.remove('disabled-input-button'); // Ensure it looks enabled
+                    disablePageElements('.page4-container');
+                    checkButtonPart1.disabled = false;
+                    checkButtonPart1.classList.remove('disabled-input-button');
                     if (nextToPart2Button) {
-                        nextToPart2Button.style.display = 'none'; // Hide next step button
+                        nextToPart2Button.style.display = 'none';
                     }
-                    enableNavButtons(); // Ensure nav buttons are enabled (specifically prev button)
-                } else if (allAnswersCorrectOnPage1) { // If correct AND attempts left (should proceed to next image)
+                    enableNavButtons();
+                } else if (allAnswersCorrectOnPage1) {
                     if (successMessageOverlay) successMessageOverlay.style.display = 'flex';
                     if (nextToPart2Button) {
                         nextToPart2Button.style.display = 'block';
@@ -1000,7 +934,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     checkButtonPart1.disabled = true;
                     checkButtonPart1.classList.add('disabled-input-button');
                     disableNavButtons();
-                } else { // Not correct, attempts left
+                } else {
                     checkButtonPart1.dataset.state = 'check';
                     checkButtonPart1.disabled = false;
                     checkButtonPart1.classList.remove('disabled-input-button');
@@ -1011,56 +945,49 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-
-        // Handle check button for page4.1.html (Image 2)
         if (currentPage === 'page4.1.html' && checkButtonPart2) {
-            // Initial text and state update for checkButtonPart2
             let initialAttempts = parseInt(localStorage.getItem('remainingAttempts') || 3);
             if (checkButtonPart2.dataset.state === 'toResults') {
                 checkButtonPart2.textContent = translations[savedLanguage]['toResults'];
-                checkButtonPart2.disabled = false; // Enable if it's already in toResults state
-                checkButtonPart2.classList.remove('disabled-input-button'); // Ensure enabled style
-                disablePageElements('.page4-container'); // Still disable other inputs
-            } else if (initialAttempts <= 0) { // If attempts are 0 on load for page 4.1, change to results button.
+                checkButtonPart2.disabled = false;
+                checkButtonPart2.classList.remove('disabled-input-button');
+                disablePageElements('.page4-container');
+            } else if (initialAttempts <= 0) {
                 checkButtonPart2.textContent = translations[savedLanguage]['toResults'];
                 checkButtonPart2.dataset.state = 'toResults';
-                checkButtonPart2.disabled = false; // Should be clickable
-                checkButtonPart2.classList.remove('disabled-input-button'); // Should look enabled
-                disablePageElements('.page4-container'); // Disable other inputs
+                checkButtonPart2.disabled = false;
+                checkButtonPart2.classList.remove('disabled-input-button');
+                disablePageElements('.page4-container');
             } else {
                 checkButtonPart2.textContent = `${translations[savedLanguage]['checkButtonPrefix']} (${initialAttempts} ${translations[savedLanguage]['attemptsSuffix']})`;
                 checkButtonPart2.dataset.state = 'check';
-                checkButtonPart2.disabled = false; // Should be clickable for checking
-                checkButtonPart2.classList.remove('disabled-input-button'); // Should look enabled
-                enablePageElements('.page4-container'); // Ensure inputs are enabled for interaction
+                checkButtonPart2.disabled = false;
+                checkButtonPart2.classList.remove('disabled-input-button');
+                enablePageElements('.page4-container');
             }
-
 
             checkButtonPart2.addEventListener('click', () => {
                 let remainingAttempts = parseInt(localStorage.getItem('remainingAttempts') || 3);
 
-                // Always collect the latest answers, regardless of attempts or button state
                 const currentImage2Answers = collectAnswers(2);
                 localStorage.setItem('image2Answers', JSON.stringify(currentImage2Answers));
 
-                // If button is in "To Results" state, navigate immediately
                 if (checkButtonPart2.dataset.state === 'toResults') {
                     const finalScore = calculateAndSaveFinalScore(selectedImages);
                     localStorage.setItem('finalScore', finalScore);
                     localStorage.setItem('testEndTime', new Date().getTime());
                     localStorage.removeItem('remainingAttempts');
-                    localStorage.removeItem('image1Answers'); // Clear image1 answers
-                    localStorage.removeItem('image2Answers'); // Clear image2 answers
+                    localStorage.removeItem('image1Answers');
+                    localStorage.removeItem('image2Answers');
                     localStorage.removeItem('image1CompletedCorrectly');
                     window.location.href = 'page5.html';
-                    return; // Exit after navigating
+                    return;
                 }
 
-                // If not in 'toResults' state, proceed with checking logic
                 const image1Data = KINEMATIC_PAIRS_DATA.find(data => data.imageName === selectedImages[0]);
                 const image2Data = KINEMATIC_PAIRS_DATA.find(data => data.imageName === selectedImages[1]);
 
-                let allAnswersCorrectOnPage2 = true; // Flag for current page's correctness
+                let allAnswersCorrectOnPage2 = true;
                 const questionsData2 = [
                     {id: 'q1_ans2', correct: image2Data.q1_translation, type: 'axis'},
                     {id: 'q2_ans2', correct: image2Data.q2_rotation, type: 'axis'},
@@ -1080,44 +1007,36 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!isCorrect) allAnswersCorrectOnPage2 = false;
                 });
 
-
-                // Decrement attempts only if answers on current page are NOT all correct AND remainingAttempts > 0
                 if (!allAnswersCorrectOnPage2 && remainingAttempts > 0) {
                     remainingAttempts--;
                     localStorage.setItem('remainingAttempts', remainingAttempts);
                 }
 
-                // Decide button text and state based on allAnswersCorrectOnPage2 OR remainingAttempts
-                // Check if all answers on CURRENT PAGE (Image 2) are correct, OR if attempts are 0
-                if (allAnswersCorrectOnPage2 || remainingAttempts <= 0) { // Changed condition to check only current page correctness for button change
+                if (allAnswersCorrectOnPage2 || remainingAttempts <= 0) {
                     checkButtonPart2.textContent = translations[savedLanguage]['toResults'];
                     checkButtonPart2.dataset.state = 'toResults';
-                    localStorage.setItem('testEndTime', new Date().getTime()); // Record time on success
-                    disablePageElements('.page4-container'); // Disable inputs
-                    checkButtonPart2.disabled = false; // ENABLE button
-                    checkButtonPart2.classList.remove('disabled-input-button'); // Ensure it looks enabled
-                } else { // Answers incorrect AND attempts left
+                    localStorage.setItem('testEndTime', new Date().getTime());
+                    disablePageElements('.page4-container');
+                    checkButtonPart2.disabled = false;
+                    checkButtonPart2.classList.remove('disabled-input-button');
+                } else {
                     checkButtonPart2.textContent = `${translations[savedLanguage]['checkButtonPrefix']} (${remainingAttempts} ${translations[savedLanguage]['attemptsSuffix']})`;
                     checkButtonPart2.dataset.state = 'check';
-                    enablePageElements('.page4-container'); // Enable inputs for next try
-                    checkButtonPart2.disabled = false; // Ensure button is ENABLED for next try
-                    checkButtonPart2.classList.remove('disabled-input-button'); // Ensure it looks enabled
+                    enablePageElements('.page4-container');
+                    checkButtonPart2.disabled = false;
+                    checkButtonPart2.classList.remove('disabled-input-button');
                 }
             });
         }
     }
 });
 
-// --- Додаткові допоміжні функції для роботи з відповідями ---
-
-// Збирає відповіді з поточної сторінки
 function collectAnswers(imageNum) {
     const answers = {};
     const qPrefix = `q`;
     const qSuffix = `_ans${imageNum}`;
     const btnSuffix = `_btn${imageNum}`;
 
-    // Collect axis answers (q1 and q2)
     for (let i = 1; i <= 2; i++) {
         const inputElement = document.getElementById(`${qPrefix}${i}${qSuffix}`);
         if (inputElement) {
@@ -1125,26 +1044,23 @@ function collectAnswers(imageNum) {
         }
     }
 
-    // Collect dropdown answers (q3, q4, q5)
     for (let i = 3; i <= 5; i++) {
         const buttonElement = document.getElementById(`${qPrefix}${i}${btnSuffix}`);
         if (buttonElement && buttonElement.dataset.value) {
             answers[`q${i}`] = buttonElement.dataset.value;
-        } else if (buttonElement) { // If button exists but no value is selected (e.g., placeholder text)
-            answers[`q${i}`] = ''; // Store as empty string
+        } else if (buttonElement) {
+            answers[`q${i}`] = '';
         }
     }
     return answers;
 }
 
-// Відновлює відповіді на сторінці
 function restoreAnswers(imageNum, savedAnswers) {
     const qPrefix = `q`;
     const qSuffix = `_ans${imageNum}`;
     const btnSuffix = `_btn${imageNum}`;
     const currentLanguage = localStorage.getItem('language') || 'uk';
 
-    // Restore axis answers
     for (let i = 1; i <= 2; i++) {
         const inputElement = document.getElementById(`${qPrefix}${i}${qSuffix}`);
         if (inputElement && savedAnswers[`q${i}`] !== undefined) {
@@ -1161,8 +1077,7 @@ function restoreAnswers(imageNum, savedAnswers) {
         }
     }
 
-    // Restore dropdown answers
-    for (let i = 3; i <= 5; i++) { // Corrected loop condition
+    for (let i = 3; i <= 5; i++) {
         const buttonElement = document.getElementById(`${qPrefix}${i}${btnSuffix}`);
         if (buttonElement && savedAnswers[`q${i}`] !== undefined) {
             buttonElement.dataset.value = savedAnswers[`q${i}`];
@@ -1172,7 +1087,7 @@ function restoreAnswers(imageNum, savedAnswers) {
                 if (savedAnswers[`q${i}`] === 'Вища') displayOption = 'Higher';
             }
             buttonElement.textContent = displayOption;
-        } else if (buttonElement) { // If no saved answer, ensure placeholder text is correct based on language
+        } else if (buttonElement) {
             const qType = buttonElement.dataset.qtype;
             if (qType === 'q3') buttonElement.textContent = translations[currentLanguage]['chooseQuantity'];
             else if (qType === 'q4') buttonElement.textContent = translations[currentLanguage]['chooseClass'];
@@ -1181,24 +1096,20 @@ function restoreAnswers(imageNum, savedAnswers) {
     }
 }
 
-// Перевіряє всі відповіді (з обох сторінок)
 function checkAllAnswersCombined(image1Data, image2Data, selectedImages) {
     const image1Answers = JSON.parse(localStorage.getItem('image1Answers') || '{}');
     const image2Answers = JSON.parse(localStorage.getItem('image2Answers') || '{}');
 
     let allCorrect = true;
 
-    // Check Image 1 answers
     if (!image1Answers['q1'] || !compareAxisAnswers(image1Answers['q1'], image1Data.q1_translation)) allCorrect = false;
     if (allCorrect && (!image1Answers['q2'] || !compareAxisAnswers(image1Answers['q2'], image1Data.q2_rotation))) allCorrect = false;
     if (allCorrect && (!image1Answers['q3'] || image1Answers['q3'] !== image1Data.q3_impossible_moves)) allCorrect = false;
     if (allCorrect && (!image1Answers['q4'] || image1Answers['q4'] !== image1Data.q4_class)) allCorrect = false;
     if (allCorrect && (!image1Answers['q5'] || image1Answers['q5'] !== image1Data.q5_type)) allCorrect = false;
 
-    // If any of Image 1 answers are incorrect, no need to check Image 2 for overall correctness
     if (!allCorrect) return false;
 
-    // Check Image 2 answers
     if (!image2Answers['q1'] || !compareAxisAnswers(image2Answers['q1'], image2Data.q1_translation)) allCorrect = false;
     if (allCorrect && (!image2Answers['q2'] || !compareAxisAnswers(image2Answers['q2'], image2Data.q2_rotation))) allCorrect = false;
     if (allCorrect && (!image2Answers['q3'] || image2Answers['q3'] !== image2Data.q3_impossible_moves)) allCorrect = false;
@@ -1208,7 +1119,6 @@ function checkAllAnswersCombined(image1Data, image2Data, selectedImages) {
     return allCorrect;
 }
 
-// Обчислює та зберігає остаточний рахунок
 function calculateAndSaveFinalScore(selectedImages) {
     const image1Answers = JSON.parse(localStorage.getItem('image1Answers') || '{}');
     const image2Answers = JSON.parse(localStorage.getItem('image2Answers') || '{}');
