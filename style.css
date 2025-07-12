@@ -1,4 +1,3 @@
-/* --- ГЛОБАЛЬНІ СТИЛІ ТА СКИНАННЯ (RESET) --- */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -9,10 +8,9 @@ body {
     justify-content: flex-start;
     align-items: center;
     min-height: 100vh;
-    padding-bottom: 90px; /* Отступ для фиксированной нижней панели */
+    padding-bottom: 90px;
 }
 
-/* --- СТИЛІ ДЛЯ ПЕРШОЇ СТОРІНКИ (index.html) --- */
 .container {
     background-color: #ffffff;
     padding: 30px;
@@ -24,7 +22,6 @@ body {
     margin: 50px auto;
 }
 
-/* Общий h1, который используется на index.html */
 h1 {
     color: #333;
     font-size: 24px;
@@ -57,9 +54,6 @@ h1 {
     color: #aaa;
 }
 
-/* Общие стили для кнопок, если они не навигационные
-   Убрал width: 100%; чтобы не мешало другим кнопкам, как .check-button
-*/
 button {
     background-color: #28a745;
     color: #ffffff;
@@ -68,7 +62,6 @@ button {
     border-radius: 5px;
     font-size: 18px;
     cursor: pointer;
-    /* width: 100%; <- УБРАНО ОТСЮДА, чтобы избежать конфликтов */
     box-sizing: border-box;
     transition: background-color 0.3s ease;
 }
@@ -77,7 +70,6 @@ button:hover {
     background-color: #218838;
 }
 
-/* --- СТИЛІ ДЛЯ ДРУГОЇ СТОРІНКИ (page2.html) --- */
 .page2-container {
     background-color: #ffffff;
     padding: 30px;
@@ -161,8 +153,6 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* --- Стилі ДЛЯ ТРЕТЬОЇ СТОРІНКИ (page3.html) --- */
-
 .page3-container {
     background-color: #ffffff;
     padding: 30px;
@@ -211,8 +201,6 @@ button:hover {
     margin-bottom: 15px;
     text-align: justify;
 }
-
-/* --- Стилі ДЛЯ ЧЕТВЕРТОЇ СТОРІНКИ (page4.html) --- */
 
 .page4-container {
     background-color: #ffffff;
@@ -286,7 +274,6 @@ button:hover {
     line-height: 1.5;
 }
 
-/* Стили для input-поля, которое теперь является контейнером для кнопок */
 .question-input {
     flex: 1;
     min-width: 120px;
@@ -306,14 +293,11 @@ button:hover {
     overflow: auto;
 }
 
-/* Стилі для плейсхолдера, щоб він відображався коректно */
 .question-input::placeholder {
     color: #aaa;
     text-shadow: none;
 }
 
-
-/* Стили для групп ввода и кнопок осі */
 .input-and-choices-group {
     display: flex;
     gap: 20px;
@@ -336,7 +320,6 @@ button:hover {
     justify-content: center;
 }
 
-/* Стилі для кнопок осі: маленькі, одна поруч з одною */
 .axis-button {
     background-color: #3884ff;
     color: #ffffff;
@@ -346,12 +329,10 @@ button:hover {
     font-size: 13px;
     cursor: pointer;
     transition: background-color 0.2s ease;
-
     flex-grow: 0;
     flex-shrink: 0;
     width: auto;
     min-width: unset;
-
     text-align: center;
     box-sizing: border-box;
     display: inline-block;
@@ -361,7 +342,6 @@ button:hover {
     background-color: #2b6edc;
 }
 
-/* Стилі для кнопки, коли вона вибрана і знаходиться в полі вводу (візуальний зворотний зв'язок) */
 .axis-button.in-input-field {
     background-color: #5cb85c;
     color: #ffffff !important;
@@ -374,7 +354,6 @@ button:hover {
     background-color: #4cae4c;
 }
 
-/* --- НОВІ СТИЛІ ДЛЯ ЗВОРОТНОГО ЗВ'ЯЗКУ (Правильно/Неправильно) --- */
 .correct-answer {
     border: 2px solid #28a745 !important;
     background-color: #e6ffe6 !important;
@@ -385,7 +364,6 @@ button:hover {
     background-color: #ffe6e6 !important;
 }
 
-/* Styles for feedback icons */
 .feedback-icon {
     margin-left: 8px;
     width: 20px;
@@ -406,7 +384,6 @@ button:hover {
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23dc3545"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>');
 }
 
-/* Flex container for input/button and feedback icon */
 .input-with-feedback {
     display: flex;
     align-items: center;
@@ -422,8 +399,6 @@ button:hover {
     flex-grow: 1;
 }
 
-
-/* Стили для выпадающих списков (кнопок) */
 .dropdown-buttons-group {
     display: flex;
     gap: 15px;
@@ -473,8 +448,6 @@ button:hover {
     box-sizing: border-box;
 }
 
-
-/* Кнопка "ПЕРЕВІРИТИ" */
 .check-button {
     background-color: #4CAF50;
     color: #ffffff;
@@ -483,18 +456,14 @@ button:hover {
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-
     width: auto !important;
     max-width: 200px;
-
     align-self: center;
     margin-top: 30px;
-
     transition: background-color 0.3s ease;
 }
 
@@ -510,8 +479,6 @@ button:hover {
     border-left: 5px solid #ffffff;
 }
 
-
-/* --- Основна навігаційна панель внизу (фіксована) --- */
 .bottom-nav-bar {
     position: fixed;
     bottom: 0;
@@ -533,13 +500,11 @@ button:hover {
     max-width: 200px;
     font-size: 15px;
     padding: 10px 15px;
-
     flex-grow: 1;
     flex-shrink: 1;
     box-sizing: border-box;
 }
 
-/* Цвета для кнопок навигации */
 .nav-button.gray {
     background-color: #e0e0e0;
     color: #555;
@@ -555,7 +520,6 @@ button:hover {
     background-color: #1976D2;
 }
 
-/* --- Адаптивність (MEDIA QUERIES) --- */
 @media (max-width: 768px) {
     body {
         overflow-x: auto;
@@ -633,7 +597,6 @@ button:hover {
         }
     }
 }
-/* --- Стилі для П'ятої Сторінки (page5.html) --- */
 
 .page5-container {
     background-color: #ffffff;
@@ -683,37 +646,34 @@ button:hover {
     color: #007bff;
 }
 
-/* NEW: Success message overlay styling */
 .success-message-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2000; /* Ensure it's on top of other content */
+    z-index: 2000;
 }
 
-/* NEW: Success message styling */
 .success-message {
-    position: relative; /* Needed for positioning the close button */
+    position: relative;
     text-align: center;
-    font-size: 20px; /* Smaller font size */
+    font-size: 20px;
     font-weight: bold;
-    color: #28a745; /* Green color for success */
+    color: #28a745;
     margin: 20px;
-    padding: 25px 30px; /* Increased padding */
+    padding: 25px 30px;
     border: 2px solid #28a745;
     border-radius: 8px;
     background-color: #e6ffe6;
-    max-width: 450px; /* Adjusted max-width */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Add some shadow */
+    max-width: 450px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-/* NEW: Close button for overlay */
 .close-overlay-button {
     position: absolute;
     top: 10px;
@@ -732,26 +692,21 @@ button:hover {
     align-items: center;
     border-radius: 50%;
     transition: background-color 0.2s ease;
-    /* Removed z-index here. It will inherit the z-index from its parent overlay. */
 }
 
 .close-overlay-button:hover {
     background-color: rgba(0,0,0,0.1);
 }
 
-/* NEW: Styling for disabled elements */
-/* Це загальний стиль для всіх disabled-input-button, включаючи навігаційні кнопки,
-   коли вони вимкнені через JS. Важливо, щоб він не застосовувався до хрестика. */
 .disabled-input-button {
     opacity: 0.7;
     cursor: not-allowed !important;
 }
 
-/* Ensure disabled buttons also look disabled */
 .check-button:disabled,
 .dropdown-button:disabled,
 .axis-button:disabled,
-.nav-button:disabled /* This targets nav buttons specifically when disabled by JS */
+.nav-button:disabled
 {
     background-color: #cccccc !important;
     color: #777777 !important;
@@ -760,7 +715,6 @@ button:hover {
     box-shadow: none;
 }
 
-/* Specific for dropdown-list when parent button is disabled */
 .dropdown-button:disabled .arrow-down {
     border-top-color: #777777 !important;
 }
